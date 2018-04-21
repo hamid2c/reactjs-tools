@@ -1,1 +1,2 @@
-Run install.sh
+Install js-beautify globally:
+npm -g install js-beautify

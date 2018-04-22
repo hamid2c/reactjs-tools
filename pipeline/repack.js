@@ -32,5 +32,5 @@ console.log("cd " + project_dir + " && npm run build");
 console.log();
 const static_build_dir = path.join(project_dir, "build/static/js");
 console.log("Upon building the static bundle, run:");
-console.log("js-beautify " + static_build_dir + "/main.INFIX.js > " + static_build_dir + "/main.INFIX.js");
+console.log("js-beautify --replace " + static_build_dir + "/main.INFIX.js");
 console.log("Note: INFIX above refers to a string generated during static build.")

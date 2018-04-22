@@ -15,4 +15,4 @@ and then run: <br />
 node pipeline/repack.js your_react_project_directory
 ```
 
-Upon running the command above, modify homepage field in package.json in your react project depending on where you wish to deploy your program. You may also be interested in running js-beautify on the produced JavaScript program.
+Upon running the command above, modify homepage field in package.json in your react project depending on where you wish to deploy your program and run: npm run build. You may also be interested in running js-beautify on the produced JavaScript program.

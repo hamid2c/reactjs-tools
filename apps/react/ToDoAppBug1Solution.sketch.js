@@ -1,4 +1,22 @@
+"use strict"; // strict mode should be used
+
 import React, { Component } from 'react';
+
+// https://github.com/substack/deep-freeze
+function deepFreeze (o) {
+  Object.freeze(o);
+
+  Object.getOwnPropertyNames(o).forEach(function (prop) {
+    if (o.hasOwnProperty(prop)
+    && o[prop] !== null
+    && (typeof o[prop] === "object" || typeof o[prop] === "function")
+    && !Object.isFrozen(o[prop])) {
+      deepFreeze(o[prop]);
+    }
+  });
+  
+  return o;
+};
 
 function inspectState(thizState) {
   console.log("####");
@@ -8,13 +26,8 @@ function inspectState(thizState) {
     const stateElem = thizState[keys[i]];
     console.log(typeof stateElem);
     if (['string', 'boolean', 'number'].includes(typeof stateElem) === false) {
-      console.log("inspecting " + keys[i]);
-      if ("push" in stateElem) {
-        stateElem["push"] = function (e) {
-          console.log("WARN: BUG#1!!");
-          //stateElem.push(e);
-        }
-      }
+      console.log("freezing " + keys[i]);
+      deepFreeze(stateElem);
     }
   }
 
@@ -42,8 +55,8 @@ class App extends Component {
   
 
   addTodoItem = item => { 
-    //this.state.items.push(item); // bug1
-    this.setState({items: [...this.state.items, item]})
+    this.state.items.push(item); // bug1
+    //this.setState({items: [...this.state.items, item]})
   };
 
   render() { 

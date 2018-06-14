@@ -31,9 +31,9 @@ function NodeInfo(metaData) {
     this.children = new Set();
     this.addChild = function(n) {
         if (typeof n !== "string")
-            throw "parameter n should be an string"
+            throw "parameter n should be a string"
         this.children.add(n);
-        console.log(this.children.size);
+        console.log("# children " + this.children.size);
     }
 }
 
@@ -76,9 +76,9 @@ function getTop(stack) {
         var cacheCount = 0;
         var cacheIndentStr = "";
 
-        var logs = ["<init>"];
+        var logs = [];
 
-        var functionStack = [];
+        var functionStack = ["<init>"];
         var callGraph = new CallGraph();
 
         function log(str) {
@@ -119,7 +119,7 @@ function getTop(stack) {
         };
 
         this.endExecution = function () {
-            var ret = "endExpression()";
+            var ret = "endExpression!!()";
             log(ret);
             callGraph.node2NodeInfo.forEach(function (value, key) {
                 var entry = [key, [...value.children]];

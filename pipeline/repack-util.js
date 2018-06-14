@@ -1,4 +1,5 @@
 'use strict';
+
 function error_and_exit(msg) {
     console.log(msg)
     process.exit(1);

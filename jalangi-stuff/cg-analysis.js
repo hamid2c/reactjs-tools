@@ -99,15 +99,14 @@ function getTop(stack) {
 
         this.invokeFun = function (iid, f, base, args, result, isConstructor, isMethod, functionIid, functionSid) {
             indentationCount--;
-            functionStack.pop()
             return {result: result};
         };
 
         this.invokeFunPre = function (iid, f, base, args, isConstructor, isMethod, functionIid, functionSid) {
             indentationCount++;
-            
-            callGraph.addEdge(getTop(functionStack), J$.iidToLocation(J$.sid, iid));
-            console.log(getTop(functionStack) + " calls " + J$.iidToLocation(J$.sid, iid));
+            // ret += ") of function created at "+J$.iidToLocation(functionSid, functionIid);
+            callGraph.addEdge(getTop(functionStack), J$.iidToLocation(functionSid, functionIid));
+            console.log(getTop(functionStack) + " calls " + J$.iidToLocation(functionSid, functionIid));
                        
             return {f: f, base: base, args: args, skip: false};
         };
@@ -117,6 +116,12 @@ function getTop(stack) {
             functionStack.push(J$.iidToLocation(J$.sid, iid));
             console.log("current function is " + J$.iidToLocation(J$.sid, iid));
         };
+
+        this.functionExit = function (iid, returnVal, wrappedExceptionVal) {
+            functionStack.pop()
+            return {returnVal: returnVal, wrappedExceptionVal: wrappedExceptionVal, isBacktrack: false};
+        };
+        
 
         this.endExecution = function () {
             var ret = "endExpression!!()";

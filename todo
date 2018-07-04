@@ -1,0 +1,6 @@
+program proj_dir -o /tmp/build
+
+1. add home to package.json
+2. copy webpack config to proj_dir
+3. npm run build in proj_dir
+4. js-beautify on output dir

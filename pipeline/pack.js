@@ -1,7 +1,14 @@
 'use strict';
-// program proj_dir -o /tmp/build
+
 const fs = require('fs');
 const path = require('path');
+const execSync = require('child_process').execSync;
+const util = require('util');
+
+function run_cmd(cmd) {
+    console.log("CMD: " + cmd);
+    execSync(cmd);
+}
 
 if (require.main === undefined) {
     console.log("This program should be run from a terminal.");
@@ -35,3 +42,9 @@ const our_webpack_config_path = path.join(program_dir, our_webpack_config);
 fs.copyFileSync(our_webpack_config_path, 
     path.join(proj_dir, webpack_config_filename));
 
+// npm run build in project directory
+run_cmd(util.format("cd %s && npm run build", proj_dir));
+
+// Move the build to out_dir
+// TODO: rm out_dir if already exists
+run_cmd(util.format("cp -r %s %s", path.join(proj_dir, "build/"), out_dir));

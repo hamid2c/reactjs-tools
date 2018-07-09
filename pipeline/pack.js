@@ -46,5 +46,4 @@ fs.copyFileSync(our_webpack_config_path,
 run_cmd(util.format("cd %s && npm run build", proj_dir));
 
 // Move the build to out_dir
-// TODO: rm out_dir if already exists
-run_cmd(util.format("cp -r %s %s", path.join(proj_dir, "build/"), out_dir));
+run_cmd(util.format("cp -TR %s %s", path.join(proj_dir, "build/"), out_dir));

@@ -24,7 +24,7 @@ const fs = require("fs");
 const program_dir = path.dirname(require.main.filename);
 const our_webpack_config_path = path.join(program_dir, our_webpack_config);
 const webpack_config_path = path.join(project_dir, webpack_config_filename);
-fs.copyFileSync(our_webpack_config, webpack_config_path);
+fs.copyFileSync(our_webpack_config, webpack_config_path); // bug?
 console.log("New configuration for wepack copied to " + project_dir);
 console.log();
 console.log("Now you can run:");

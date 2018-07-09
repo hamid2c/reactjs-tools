@@ -4,11 +4,22 @@ const fs = require('fs');
 const path = require('path');
 const execSync = require('child_process').execSync;
 const util = require('util');
+const find = require('find');
 
 function run_cmd(cmd) {
     console.log("CMD: " + cmd);
     execSync(cmd);
 }
+
+function js_beautify_main(build_dir) {
+    var files = find.fileSync(/main\..+\.js$/,build_dir);
+    if (files.length !== 1) {
+        console.log("Could not find main.*.js in " + build_dir + " to beautify." );
+        return;
+    }
+    run_cmd(util.format("js-beautify --replace %s ", files[0]));
+}
+
 
 if (require.main === undefined) {
     console.log("This program should be run from a terminal.");
@@ -45,5 +56,9 @@ fs.copyFileSync(our_webpack_config_path,
 // npm run build in project directory
 run_cmd(util.format("cd %s && npm run build", proj_dir));
 
+// js-beautify
+const proj_build_dir = path.join(proj_dir, "build/");
+js_beautify_main(proj_build_dir);
+
 // Move the build to out_dir
-run_cmd(util.format("cp -TR %s %s", path.join(proj_dir, "build/"), out_dir));
+run_cmd(util.format("cp -TR %s %s", proj_build_dir, out_dir));

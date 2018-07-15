@@ -37,6 +37,7 @@ if (process.argv.length == 4) {
     out_dir = process.argv[3];
 }
 
+// package.json
 const packaje_json_path = path.join(proj_dir, "package.json");
 const read_text = fs.readFileSync(packaje_json_path);
 var obj = JSON.parse(read_text, "utf-8");
@@ -53,7 +54,7 @@ const our_webpack_config_path = path.join(program_dir, our_webpack_config);
 fs.copyFileSync(our_webpack_config_path, 
     path.join(proj_dir, webpack_config_filename));
 
-// npm run build in project directory
+// npm run build
 run_cmd(util.format("cd %s && npm run build", proj_dir));
 
 // js-beautify
@@ -61,4 +62,7 @@ const proj_build_dir = path.join(proj_dir, "build/");
 js_beautify_main(proj_build_dir);
 
 // Move the build to out_dir
-run_cmd(util.format("cp -TR %s %s", proj_build_dir, out_dir));
+// run_cmd(util.format("cp -TR %s %s", proj_build_dir, out_dir));
+
+// TODO:
+// incorporate janalgi-inst script

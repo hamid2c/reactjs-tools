@@ -3,5 +3,9 @@ program proj_dir -o /tmp/build
 x1. add home to package.json
 x2. copy webpack config to proj_dir
 x3. npm run build in proj_dir
-4. js-beautify on output dir
-5. move the build to output directory
+x4. js-beautify on output dir
+x5. move the build to output directory
+x5.5. package.json
+x6. update README
+x7. instrument the generated website with jalangi
+8. incorporate janalgi-inst script to pack.js

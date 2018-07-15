@@ -5,7 +5,7 @@ if [ -z "$JALANGI_HOME" ]; then
     exit 1
 fi
 cd $JALANGI_HOME
-if [ $((0)) == 1 ]; then
+if [ $((1)) == 1 ]; then
 echo "No 1"
 node src/js/commands/instrument.js --inlineIID --inlineSource -i --inlineJalangi \
  --analysis src/js/sample_analyses/ChainedAnalyses.js \
@@ -17,16 +17,18 @@ node src/js/commands/instrument.js --inlineIID --inlineSource -i --inlineJalangi
  --analysis src/js/sample_analyses/dlint/ConcatUndefinedToString.js \
  --analysis src/js/sample_analyses/dlint/UndefinedOffset.js \
  --analysis /all/projs/reactjs-tools/jalangi-stuff/cg-analysis.js \
- --outputDir /tmp/jala /tmp/bla #tests/tizen/annex
+ --outputDir /mybins/temp/o/ /mybins/temp/foo-app/build # temp-dir proj-dir/build
+
+ cp -TRv /mybins/temp/o/build /tmp/new  # temp-dir/build out-dir
 fi
 
-if [ $((1)) == 1 ]; then
+if [ $((0)) == 1 ]; then
 echo "No 2"
 node src/js/commands/instrument.js --inlineIID --inlineSource -i --inlineJalangi \
 --analysis src/js/sample_analyses/ChainedAnalyses.js \
 --analysis src/js/runtime/SMemory.js \
 --analysis src/js/sample_analyses/pldi16/TraceAll.js \
---outputDir /tmp/ja /tmp/new/static/js/main.cd32e3f8.js
+--outputDir /tmp/new /tmp/new/
 fi
 
 #chromium-browser --incognito /tmp/annex/index.html &

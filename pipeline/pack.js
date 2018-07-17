@@ -6,6 +6,8 @@ const execSync = require('child_process').execSync;
 const util = require('util');
 const find = require('find');
 
+const analyses = require("pipeline.analyses");
+
 function run_cmd(cmd) {
     console.log("CMD: " + cmd);
     execSync(cmd);
@@ -66,3 +68,10 @@ js_beautify_main(proj_build_dir);
 
 // TODO:
 // incorporate janalgi-inst script
+const temp_dir = fs.mkdtempSync("tempDir");
+console.log("Created temp directory: " + temp_dir);
+
+
+// clean up
+run_cmd(util.format("rm -rf %s", temp_dir));
+

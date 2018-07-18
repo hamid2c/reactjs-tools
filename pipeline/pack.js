@@ -6,7 +6,18 @@ const execSync = require('child_process').execSync;
 const util = require('util');
 const find = require('find');
 
-const analyses = require("pipeline.analyses");
+const list_of_analyses_path = path.join(process.cwd(),
+     "pipeline.analyses");
+const analyses_module = require(list_of_analyses_path);
+
+const proj_dir = process.argv[2];
+var out_dir = "/tmp/build";
+if (process.argv.length == 4) {
+    out_dir = process.argv[3];
+}
+
+// console.log(run_jalangi_command());
+// process.exit(0);
 
 function run_cmd(cmd) {
     console.log("CMD: " + cmd);
@@ -22,6 +33,22 @@ function js_beautify_main(build_dir) {
     run_cmd(util.format("js-beautify --replace %s ", files[0]));
 }
 
+function convert_to_real_path(analysis_path) {
+    if (analysis_path.startsWith("$JALANGI_HOME") || analysis_path.startsWith("/"))
+        return analysis_path;
+    return path.join(analyses_module.baseDirectory, analysis_path);
+}
+
+function run_jalangi_command() {
+    let analyses_string = "";
+    analyses_module.analyses.forEach(function(analysis_path) {
+        analyses_string += "--analysis " + convert_to_real_path(analysis_path) + " ";
+    });
+    return util.format(
+        "node src/js/commands/instrument.js --inlineIID --inlineSource -i --inlineJalangi %s %s",
+    analyses_string, proj_dir);
+}
+
 
 if (require.main === undefined) {
     console.log("This program should be run from a terminal.");
@@ -31,12 +58,6 @@ if (require.main === undefined) {
 if (process.argv.length < 3) {
     console.log("usage: pack proj_dir [out_dir]");
     process.exit(1);
-}
-
-const proj_dir = process.argv[2];
-var out_dir = "/tmp/build";
-if (process.argv.length == 4) {
-    out_dir = process.argv[3];
 }
 
 // package.json

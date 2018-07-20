@@ -16,9 +16,6 @@ if (process.argv.length == 4) {
     out_dir = process.argv[3];
 }
 
-// console.log(run_jalangi_command());
-// process.exit(0);
-
 function run_cmd(cmd) {
     console.log("CMD: " + cmd);
     execSync(cmd);
@@ -40,13 +37,25 @@ function convert_to_real_path(analysis_path) {
 }
 
 function run_jalangi_command() {
-    let analyses_string = "";
+    const temp_dir = fs.mkdtempSync("tempDir");
+    console.log("Created temp directory: " + temp_dir);
+
+    let analysis_options_string = "";
     analyses_module.analyses.forEach(function(analysis_path) {
-        analyses_string += "--analysis " + convert_to_real_path(analysis_path) + " ";
+        analysis_options_string += "--analysis " + convert_to_real_path(analysis_path) + " ";
     });
-    return util.format(
-        "node src/js/commands/instrument.js --inlineIID --inlineSource -i --inlineJalangi %s %s",
-    analyses_string, proj_dir);
+
+    const first_part = "node $JALANGI_HOME/src/js/commands/instrument.js --inlineIID --inlineSource -i --inlineJalangi";
+    const last_part = util.format(
+    "--outputDir %s %s", temp_dir, path.join(proj_dir, "build"));
+    
+    const jalangi_command = util.format("%s %s %s", first_part, analysis_options_string, last_part);
+    run_cmd(jalangi_command);
+    
+    // copy the intrumented application to output directory
+    run_cmd(util.format("cp -TRv %s %s", path.join(temp_dir, "build"), out_dir));
+    // clean up
+    run_cmd(util.format("rm -rf %s", temp_dir));
 }
 
 
@@ -87,12 +96,5 @@ js_beautify_main(proj_build_dir);
 // Move the build to out_dir
 // run_cmd(util.format("cp -TR %s %s", proj_build_dir, out_dir));
 
-// TODO:
-// incorporate janalgi-inst script
-const temp_dir = fs.mkdtempSync("tempDir");
-console.log("Created temp directory: " + temp_dir);
-
-
-// clean up
-run_cmd(util.format("rm -rf %s", temp_dir));
+run_jalangi_command();
 

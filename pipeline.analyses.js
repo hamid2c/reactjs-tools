@@ -7,7 +7,7 @@ module.exports.analyses = [
      "$JALANGI_HOME/src/js/sample_analyses/dlint/ShadowProtoProperty.js",
      "$JALANGI_HOME/src/js/sample_analyses/dlint/ConcatUndefinedToString.js",
      "$JALANGI_HOME/src/js/sample_analyses/dlint/UndefinedOffset.js",
-     "cg-analysis.js"
+     "sample-analyses/cg-analysis.js"
    ];
 
    module.exports.baseDirectory = __dirname;

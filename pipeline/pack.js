@@ -10,9 +10,28 @@ const list_of_analyses_path = path.join(process.cwd(),
      "pipeline.analyses");
 const analyses_module = require(list_of_analyses_path);
 
+function print_usage_and_exit() {
+    console.log("usage: node pack.js <project-directory> <output-directory> [-j]");
+    process.exit(1);
+}
+
+function print_and_exit(msg) {
+    console.log(msg);
+    process.exit(1);
+}
+
+// Check user inputs
+if (process.argv.length < 3) {
+    print_usage_and_exit();
+}
+if (process.env.JALANGI_HOME === undefined) {
+    print_and_exit("You need to set JALANGI_HOME environment variable.");
+}
+//
+
 const proj_dir = process.argv[2];
-var out_dir = "/tmp/build";
-if (process.argv.length == 4) {
+var out_dir = "/tmp/pack-output";
+if (process.argv.length === 4) {
     out_dir = process.argv[3];
 }
 

@@ -10,7 +10,10 @@ x6. update README
 x7. instrument the generated website with jalangi
     -x check JALANGI_HOME env and print 
     -x should we cd to JALANGI_HOME? no
+x. -j and -p option
 x. incorporate janalgi-inst script to pack.js
+.put a sample project 
+README:
 . update README, USAGE  and default output directory, etc
-. mention JALANGI_HOME IN README
+x. mention JALANGI_HOME IN README
 . talk about pipeline.analyses in README

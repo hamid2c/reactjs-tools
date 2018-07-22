@@ -2,10 +2,9 @@ README
 ======
 
 ## Packaging Pipeline
-Reactjs is a popular framework for developing frontend applications. It comes with its own toolset for debugging, however, it is beneficial to be able to transform a React project to a form which can be processed by other tools such as Jalangi.
+Reactjs is a popular framework for developing frontend applications. It comes with its own set of tools for debugging, however, it is beneficial to be able to transform a React project to a form which can be processed by other tools such as [Jalangi](https://github.com/Samsung/jalangi2 "Jalangi2 on Github").
 
 The goal of this pipeline is to produce a bundle of your React project, and then analyze it by using Jalangi. The main component is the script pipeline/pack.js.
-
 
 It is recommended to install js-beautify globally: <br />
 ```

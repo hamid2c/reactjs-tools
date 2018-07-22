@@ -11,7 +11,7 @@ const list_of_analyses_path = path.join(process.cwd(),
 const analyses_module = require(list_of_analyses_path);
 
 function print_usage_and_exit() {
-    console.log("usage: node pack.js <project-directory> <output-directory> [-j]");
+    console.log("usage: node pack.js <project-directory> <output-directory> [j|p]");
     process.exit(1);
 }
 
@@ -21,7 +21,7 @@ function print_and_exit(msg) {
 }
 
 // Check user inputs
-if (process.argv.length < 3) {
+if (process.argv.length < 4) {
     print_usage_and_exit();
 }
 if (process.env.JALANGI_HOME === undefined) {
@@ -30,9 +30,13 @@ if (process.env.JALANGI_HOME === undefined) {
 //
 
 const proj_dir = process.argv[2];
-var out_dir = "/tmp/pack-output";
-if (process.argv.length === 4) {
-    out_dir = process.argv[3];
+var out_dir = process.argv[3];
+
+var processing_mode = process.argv[4];
+if (processing_mode !== undefined) {
+    if (!['j', 'p'].includes(processing_mode)) {
+        print_and_exit("The fifth argument can be either j or p");
+    }
 }
 
 function run_cmd(cmd) {
@@ -105,15 +109,20 @@ const our_webpack_config_path = path.join(program_dir, our_webpack_config);
 fs.copyFileSync(our_webpack_config_path, 
     path.join(proj_dir, webpack_config_filename));
 
-// npm run build
-run_cmd(util.format("cd %s && npm run build", proj_dir));
+var proj_build_dir = undefined;
+if (processing_mode !== 'j') {
+    // npm run build
+    run_cmd(util.format("cd %s && npm run build", proj_dir));
 
-// js-beautify
-const proj_build_dir = path.join(proj_dir, "build/");
-js_beautify_main(proj_build_dir);
+    // js-beautify
+    proj_build_dir = path.join(proj_dir, "build/");
+    js_beautify_main(proj_build_dir);
+}
 
-// Move the build to out_dir
-// run_cmd(util.format("cp -TR %s %s", proj_build_dir, out_dir));
-
-run_jalangi_command();
+if (processing_mode !== 'p') {
+    run_jalangi_command();
+} else {
+    console.log(util.format("Your project has been processed. You can find it in %s.", proj_build_dir));
+    console.log(util.format("Note that you still need to copy it to %s.", out_dir));
+}
 

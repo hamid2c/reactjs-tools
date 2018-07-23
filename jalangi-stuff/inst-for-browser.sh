@@ -16,7 +16,7 @@ node src/js/commands/instrument.js --inlineIID --inlineSource -i --inlineJalangi
  --analysis src/js/sample_analyses/dlint/ShadowProtoProperty.js \
  --analysis src/js/sample_analyses/dlint/ConcatUndefinedToString.js \
  --analysis src/js/sample_analyses/dlint/UndefinedOffset.js \
- --analysis /all/projs/reactjs-tools/jalangi-stuff/cg-analysis.js \
+ --analysis /all/projs/reactjs-tools/sample-analyses/cg-analysis.js \
  --outputDir /mybins/temp/o/ /mybins/temp/foo-app/build # temp-dir proj-dir/build
 
  cp -TRv /mybins/temp/o/build /tmp/new  # temp-dir/build out-dir
@@ -39,4 +39,3 @@ fi
 ## node
 #node src/js/commands/jalangi.js --inlineIID --inlineSource --analysis src/js/sample_analyses/ChainedAnalyses.js \
 # --analysis src/js/runtime/SMemory.js --analysis src/js/sample_analyses/pldi16/TraceAll.js ~/temp/1.js
-

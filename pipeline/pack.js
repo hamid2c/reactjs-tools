@@ -8,6 +8,7 @@ const find = require('find');
 
 const list_of_analyses_path = path.join(process.cwd(),
      "pipeline.analyses");
+     
 const analyses_module = require(list_of_analyses_path);
 
 function print_usage_and_exit() {

@@ -10,14 +10,24 @@ You need to install js-beautify globally: <br />
 ```
 npm -g install js-beautify
 ```
+
+Then
+
+```
+cd reactjs-tools
+npm install
+```
+
 Follow the instruction on [https://github.com/Samsung/jalangi2](https://github.com/Samsung/jalangi2) to install Jalangi on your computer.
 
-Set the JALANGI_HOME environment variable to the location where you installed Jalangi.
+Set the JALANGI_HOME environment variable to the location where you have installed Jalangi.
 
-and then run: <br />
+To run the pipeline: <br />
 ```
-node pipeline/pack.js your_react_project_directory output_directory
+node pipeline/pack.js react_project_directory output_directory
 ```
-<!-- Upon running the command above, modify homepage field in package.json in your react project depending on where you wish to deploy your program and run: npm run build. You may also be interested in running js-beautify on the produced JavaScript program. -->
-`output_directory` is the place where you wish to deploy your react website. If you don't provide any value for `output_directory`, it would be set to /tmp/build. The deployment is a static build of your react project which has been beautified, and is ready to be processed by Jalangi.
+
+`react_project_directory` indicates the place of your react project. `output_directory` is the place where you wish to deploy your react website. The deployment is a static build of your react project which has been beautified, and also instrumented by Jalangi.
+
+To define the set of Jalangi analyses, the file `pipeline.analyses.js` should be placed in the current working directory. It should follow the same structure as [the sample file](https://github.com/hamid2c/reactjs-tools/blob/master/pipeline.analyses.js).
 

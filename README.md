@@ -29,5 +29,5 @@ node pipeline/pack.js react_project_directory output_directory
 
 `react_project_directory` indicates the place of your react project. `output_directory` is the place where you wish to deploy your react website. The deployment is a static build of your react project which has been beautified, and also instrumented by Jalangi.
 
-To define the set of Jalangi analyses, the file `pipeline.analyses.js` should be placed in the current working directory. It should follow the same structure as [the sample file](https://github.com/hamid2c/reactjs-tools/blob/master/pipeline.analyses.js).
+To define the set of Jalangi analyses, the file `pipeline.analyses.js` should be placed in the current working directory. It should follow the same structure as [this sample file](https://github.com/hamid2c/reactjs-tools/blob/master/pipeline.analyses.js).
 

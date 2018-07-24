@@ -22,6 +22,11 @@ function print_and_exit(msg) {
 }
 
 // Check user inputs
+if (require.main === undefined) {
+    console.log("This program should be run from a terminal.");
+    process.exit(1);
+}
+
 if (process.argv.length < 4) {
     print_usage_and_exit();
 }
@@ -82,16 +87,6 @@ function run_jalangi_command() {
     run_cmd(util.format("rm -rf %s", temp_dir));
 }
 
-
-if (require.main === undefined) {
-    console.log("This program should be run from a terminal.");
-    process.exit(1);
-}
-
-if (process.argv.length < 3) {
-    console.log("usage: pack proj_dir [out_dir]");
-    process.exit(1);
-}
 
 // package.json
 const packaje_json_path = path.join(proj_dir, "package.json");
